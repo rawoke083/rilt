@@ -1,0 +1,16 @@
+<div   ng-init="getRiltLatest()">
+	<h4>Rilt LIST HTML
+	</h4>
+
+
+ <ul>
+    <li ng-repeat="rilt in rilts">
+      <p>{{rilt.title}}  {{rilt.description}}</p>
+           
+      
+    </li>
+  </ul>
+    
+   <button ng-click="getRiltLatest()">Fetch Latest</button>
+
+</div>

@@ -1,0 +1,41 @@
+<div style="width:50%">
+	<h4 >User Sign In
+	</h4>
+	
+	<p ng-bind="feedback"></p>
+	
+  
+  <form novalidate class="simple-form" name="signinForm" role="form">
+  
+	  
+   <div class="form-group"  ng-class="{ 'has-error': signinForm.Email.$invalid }">
+    <label for="email">Email address</label>
+    <input type="email" class="form-control" name="Email" placeholder="Enter email"  ng-model="usr.Email" required>
+  </div>
+  
+  
+     <div ng-show="signinForm.Email.$dirty && signinForm.Email.$invalid">Invalid:
+      <span ng-show="signinForm.Email.$error.required">Tell us yoxxxur email.</span>
+      <span ng-show="signinForm.Email.$error.email">This is not axx valid email.</span>
+    </div>
+
+
+
+<div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" name="password" placeholder="Password"  ng-model="usr.Password" required>
+  </div>
+
+
+    
+<button type="submit" class="btn  btn-lg btn-fill btn-primary" ng-click="signInUsr(usr)">Sign In</button>
+       
+       
+
+
+ 
+  </form>
+  
+
+ 
+</div>

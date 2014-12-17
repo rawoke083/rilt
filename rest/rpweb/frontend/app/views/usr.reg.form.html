@@ -1,0 +1,40 @@
+<div style="width:50%">
+	<h4 >Usr FORM HTML
+	</h4>
+	
+	<p ng-bind="feedback"></p>
+	
+  
+  <form novalidate class="simple-form" name="uform" role="form">
+  
+	  
+   <div class="form-group">
+    <label for="email">Email address</label>
+    <input type="email" class="form-control" id="email" placeholder="Enter email"  ng-model="usr.email" required>
+  </div>
+  
+<div class="form-group">
+    <label for="password1">Password</label>
+    <input type="password" class="form-control" id="password1" placeholder="Password"  ng-model="usr.passwd1" required>
+  </div>
+
+<div class="form-group">
+    <label for="password2">Confirm Password</label>
+    <input type="password" class="form-control" id="password2" placeholder="Confirm Password<"  ng-model="usr.passwd2" required>
+  </div>  
+    
+<button type="submit" class="btn  btn-lg btn-fill btn-primary" ng-click="registerUsr(usr)" ng-disabled="!uform.$valid">Register</button>
+       
+       
+  <span style="color:red" ng-show="uform.email.$dirty && uform.email.$invalid">
+  <span ng-show="uform.email.$error.required">Email is required.</span>
+  <span ng-show="uform.email.$error.email">Invalid email address.</span>
+    
+   
+    
+ 
+  </form>
+  
+
+ 
+</div>

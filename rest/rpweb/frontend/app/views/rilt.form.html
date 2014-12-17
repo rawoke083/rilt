@@ -1,0 +1,31 @@
+<div>
+	<h4 >Rilt FORM HTML
+	</h4>
+	
+	<p ng-bind="feedback"></p>
+	
+  
+  <form novalidate class="simple-form">
+    Concept: <input type="text" ng-model="rilt.title" /><br />
+    
+    Rilt: <textarea  ng-model="rilt.description" /></textarea><br />
+  
+  
+
+
+    
+    Tags: <input type="text" ng-model="rilt.tags"  />
+    
+    <button ng-click="reset()">RESET</button>
+    <button ng-click="updateRilt(rilt)">SAVE</button>
+  </form>
+  
+  
+  <h2>Preview</h2> 
+   <div markdownn="rilt.description">M.D</div>
+
+  
+
+
+</div>
+
