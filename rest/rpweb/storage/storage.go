@@ -20,8 +20,6 @@ var dbConn  *sqlx.DB
 
 
 
-
-
 func GetDb() (*sqlx.DB) {
 
 	if dbConn == nil {

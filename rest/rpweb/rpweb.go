@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	jwt "github.com/dgrijalva/jwt-go"
+	
 	"github.com/rawoke083/rpweb/models"
 	"github.com/rawoke083/rpweb/storage"
 	_"github.com/rawoke083/rpweb/repos"
@@ -15,28 +15,13 @@ import (
 	"log"
 	"net/http"
 	_"strconv"
-	//"strings"
-	"io/ioutil"
-	"time"
+	"runtime"
+	
 
 )
 
 
-const pkey string = "aaaAegha3chEinob5roKequ0voo"
-
-
-
-func Authenticated(h web.HandlerFunc) web.HandlerFunc {
-    return web.HandlerFunc(func(c web.C, w http.ResponseWriter, r *http.Request) {
-        log.Println("Doing some fancy authentication")
-        
-        
-        h.ServeHTTPC(c, w, r)
-    })
-}
-func API_Item_New(c web.C, w http.ResponseWriter, r *http.Request) {
-    w.Write([]byte("hello world"))
-}
+const pkey string = "Aegha3chEinob5roKequ0voo"
 
 
 func MW_AuthOK(w http.ResponseWriter, r *http.Request) bool{
@@ -68,53 +53,6 @@ func MW_AuthOK(w http.ResponseWriter, r *http.Request) bool{
 }//end MW_Auth
 
 
-func APIAuthLogin(cc web.C, w http.ResponseWriter, req *http.Request) {
-
-	
- 
-	msg_Login := models.RP_MSG_UsrLogin{}
-	decoder := json.NewDecoder(req.Body)
-
-	
-	err := decoder.Decode(&msg_Login)
-	if err != nil {
-		w.WriteHeader(500)
-		fmt.Fprintf(w, "Bad POST"+err.Error())
-	}
-
-	
-	authUsr := models.RP_Usr{}
-	if ! authUsr.AuthAndInit(msg_Login.Email,msg_Login.Password) {
-		w.WriteHeader(401)
-		fmt.Fprintf(w, "{\"error\": \"Bad Login\",\"email\":\"%s\",\"password\":\"%s\"}", msg_Login.Email,msg_Login.Password)
-	}
-	
-
-	
-	
-	//Create token
-	privateKey, _ := ioutil.ReadFile("/home/jacques/pkeys/demo.rsa")
-	token := jwt.New(jwt.GetSigningMethod("RS256"))
-
-
-	token.Claims["ID"] = authUsr.ID
-	token.Claims["exp"] = time.Now().Unix() + 36000
-	token.Claims["R"] = req.RemoteAddr
-	token.Claims["E"] = authUsr.Email
-
-
-	// The claims object allows you to store information in the actual token.
-	tokenString, err := token.SignedString(privateKey)
-	if err != nil {
-		fmt.Fprintf(w, "{\"error\": %s}", err.Error())
-	}
-	
-	
-	//All OK
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "{\"token\": \"%s\",\"email\":\"%s\",\"password\":\"%s\"}", tokenString,msg_Login.Email,msg_Login.Password)
-
-}
 
 func MW_API_Auth3(c *web.C, w http.ResponseWriter, r *http.Request) {
 
@@ -192,36 +130,7 @@ func MW_API_Auth2(c *web.C, h http.Handler) http.Handler {
 
 } //end auth
 */
-func APIRiltNew(cc web.C, w http.ResponseWriter, req *http.Request) {
 
-	log.Println("******* APIRiltNew *********")
-	
-	/*if ! MW_AuthOK (w,req) {
-		//return
-	}
-	*/
-	
-	var c models.RP_Concept
-
-	decoder := json.NewDecoder(req.Body)
-
-	err := decoder.Decode(models.Concept)
-	if err != nil {
-		w.WriteHeader(500)
-		fmt.Fprintf(w, "Bad POST"+err.Error())
-	}
-
-	err_create := models.Concept.Create()
-	if err_create != nil {
-		w.WriteHeader(500)
-		fmt.Fprintf(w, fmt.Sprintf("Concept(%v) NOT Created (%d)", c, err_create.Error()))
-		return
-	}
-	
-	w.WriteHeader(http.StatusCreated)
-	fmt.Fprintf(w, fmt.Sprintf("User(%s) Created (%d)", models.Concept.Title, models.Concept.ID))
-	
-}
 
 func APIUsrNew(c web.C, w http.ResponseWriter, req *http.Request) {
 
@@ -269,26 +178,26 @@ func APIUsrGet(c web.C, w http.ResponseWriter, r *http.Request) {
 func main() {
 	// Setup static files
 	//static := web.New()
-
+runtime.GOMAXPROCS(runtime.NumCPU())
 	storage.DbTestParams()
 
 	//Auth
 
 	
 	//Auth - login
-	goji.Post("/api/v1/auth/login",APIAuthLogin);
+	goji.Post("/api/v1/auth/login",api.Auth.Login);
 	
 		
 	//api-usr	
-	goji.Get("/api/v1/usr/*", Authenticated(APIUsrGet))
+	goji.Get("/api/v1/usr/*", api.Auth.IsAuth(APIUsrGet))
 	goji.Post("/api/v1/usr/*", APIUsrNew)
 
 	//api-rilt
 	//goji.Get("/api/v1/rilt/:id", Authenticated(APIRiltGet))
 	//goji.Get("/api/v1/rilt/:id/*", APIRiltGet)
 	
-	goji.Get("/api/v1/concept/:id/*", api.Concept.FindById)
-	goji.Get("/api/v1/concept/:id", api.Concept.FindById)
+	goji.Get("/api/v1/concept/:id/*", api.Auth.IsAuth(api.Concept.FindById))
+	goji.Get("/api/v1/concept/:id", api.Auth.IsAuth(api.Concept.FindById))
 	
 	goji.Post("/api/v1/concept/*", api.Concept.New)
 
