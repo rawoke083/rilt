@@ -1,83 +1,73 @@
 package models
 
 import (
+	"code.google.com/p/go.crypto/bcrypt"
 	_ "errors"
 	_ "fmt"
-	"log"
 	"github.com/rawoke083/rpweb/storage"
-	"code.google.com/p/go.crypto/bcrypt"
+	"log"
 )
 
-type RP_Usr struct {
-	ID     		int64
-	Name   		string
-	Email  		string
-	HPasswdS	string `db:"hpasswd"`
-	Password	string
-	Confirmed	int
-	Points int
+type Usr struct {
+	ID        int64
+	Name      string
+	Email     string
+	HPasswdS  string `db:"hpasswd"`
+	Password  string
+	Confirmed int
+	Points    int
 }
 
+func (self *Usr) AuthAndInit(Email string, Password string) bool {
 
-
-func (self *RP_Usr) AuthAndInit(Email string,Password string) bool{
-	
 	if !self.FindByEmail(Email) {
-		log.Println("User not found:"+Email)
+		log.Println("User not found:" + Email)
 		return false
 	}
-	
-	
+
 	bytesHashedDBPassword := []byte(self.HPasswdS)
 	bytesPlainPasswordIN := []byte(Password)
-	log.Println("TRYING:"+Password)
-	
+	log.Println("TRYING:" + Password)
 
-  // Comparing the password with the hash
-    err2 := bcrypt.CompareHashAndPassword(bytesHashedDBPassword, bytesPlainPasswordIN)
-    if err2 != nil  {
-		log.Println(err2) // nil means it is a match
+	// Comparing the password with the hash
+	err2 := bcrypt.CompareHashAndPassword(bytesHashedDBPassword, bytesPlainPasswordIN)
+	if err2 != nil {
+		log.Println(err2)              // nil means it is a match
+		log.Println("NOT-OK-USR-AUTH") // nil means it is a match
+
 		return false
-		
+
 	}
-	
-    log.Println("OK-USH-AUTH") // nil means it is a match
-	
+
+	log.Println("OK-USR-AUTH") // nil means it is a match
+
 	return true
 }
-	
-func (self *RP_Usr) Create() (int64, error) {
+
+func (self *Usr) Create() (int64, error) {
 
 	// Prepare statement for inserting data
 	stmtIns, err := storage.GetDb().Prepare("INSERT INTO Usr (email,hpasswd,confirmed) VALUES( ?, ?,? )")
 	if err != nil {
-		log.Println("DB Usr:Prepare", err.Error())		
+		log.Println("DB Usr:Prepare", err.Error())
 	}
 	defer stmtIns.Close() // Close the statement when we leave main() / the program terminates
 
-	
-	
 	bytesPlainPassword := []byte(self.Password)
-	
-    bytesHPassword, err := bcrypt.GenerateFromPassword(bytesPlainPassword, 3)
-    strHPassword := string(bytesHPassword)
-    
-    log.Println("PP:"+self.Password)
-    log.Println("HP:"+strHPassword)
-    
-    if err != nil {
-        panic(err)
-    }
-    log.Println()
 
+	bytesHPassword, err := bcrypt.GenerateFromPassword(bytesPlainPassword, 3)
+	// strHPassword := string(bytesHPassword)
 
-
-	result, err := stmtIns.Exec(self.Email, bytesHPassword,0)
-	if err != nil {		
-		log.Println("DB Usr:insert", err.Error())		
-		return  0,err
+	if err != nil {
+		panic(err)
 	}
+	log.Println()
 
+	result, err := stmtIns.Exec(self.Email, bytesHPassword, 0)
+	if err != nil {
+		log.Println("DB Usr:insert", err.Error())
+		return 0, err
+	}
 
 	id, err := result.LastInsertId()
 	if err != nil {
@@ -86,25 +76,21 @@ func (self *RP_Usr) Create() (int64, error) {
 		self.ID = id
 		return self.ID, nil
 
-		
 	}
 
 }
 
+func (self *Usr) FindByEmail(email string) bool {
 
+	err := storage.GetDb().Get(self, "SELECT email,hpasswd,confirmed FROM Usr WHERE email  = ?", email)
 
-func (self *RP_Usr) FindByEmail(email string ) bool {
-
-	err := storage.GetDb().Get(self, "SELECT email,hpasswd,confirmed FROM Usr WHERE email  = ?",email)
-	
-	 if(err != nil ){
+	if err != nil {
 		log.Println(err.Error())
-		return  false 
+		return false
 	}
-    
-    return true
-    
 
-//row := storage.GetDb().QueryRow("SELECT email,hpasswd,confirmed FROM Usr WHERE email  = ?",email)
-	
+	return true
+
+	//row := storage.GetDb().QueryRow("SELECT email,hpasswd,confirmed FROM Usr WHERE email  = ?",email)
+
 }

@@ -134,7 +134,7 @@ func MW_API_Auth2(c *web.C, h http.Handler) http.Handler {
 
 func APIUsrNew(c web.C, w http.ResponseWriter, req *http.Request) {
 
-	var u models.RP_Usr
+	var u models.Usr
 
 	decoder := json.NewDecoder(req.Body)
 
@@ -165,7 +165,7 @@ func APIUsrGet(c web.C, w http.ResponseWriter, r *http.Request) {
 	
 	fmt.Fprintf(w, "API")
 
-	u := models.RP_Usr{ID: 1, Name: "koos", Email: "k@k"}
+	u := models.Usr{ID: 1, Name: "koos", Email: "k@k"}
 
 	b, err := json.Marshal(u)
 	if err != nil {
@@ -178,16 +178,16 @@ func APIUsrGet(c web.C, w http.ResponseWriter, r *http.Request) {
 func main() {
 	// Setup static files
 	//static := web.New()
-runtime.GOMAXPROCS(runtime.NumCPU())
+	runtime.GOMAXPROCS(runtime.NumCPU())
 	storage.DbTestParams()
 
-	//Auth
+	
 
 	
 	//Auth - login
 	goji.Post("/api/v1/auth/login",api.Auth.Login);
 	
-		
+	
 	//api-usr	
 	goji.Get("/api/v1/usr/*", api.Auth.IsAuth(APIUsrGet))
 	goji.Post("/api/v1/usr/*", APIUsrNew)

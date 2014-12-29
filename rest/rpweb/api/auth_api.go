@@ -40,7 +40,7 @@ func (AuthAPI) Login(cc web.C, w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	authUser := new(models.RP_Usr)
+	authUser := new(models.Usr)
 	
 	if ! authUser.AuthAndInit(rpreq.LoginAttempt.Email,rpreq.LoginAttempt.Password) {
 		w.WriteHeader(401)
@@ -73,7 +73,7 @@ func (AuthAPI) Login(cc web.C, w http.ResponseWriter, req *http.Request) {
 	
 	//All OK
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "{\"token\": \"%s\",\"email\":\"%s\",\"password\":\"%s\"}", tokenString,rpreq.LoginAttempt.Email,rpreq.LoginAttempt.Password)
+	fmt.Fprintf(w, "{\"access_token\": \"%s\",\"email\":\"%s\",\"id\":\"%s\"}", tokenString,rpreq.LoginAttempt.Email,authUser.ID)
 
 }
 
@@ -84,6 +84,63 @@ func (AuthAPI)IsAuth(h web.HandlerFunc) web.HandlerFunc {
         
         access_token := r.Header.Get("AccessToken")
 		log.Printf("IsAuth:Token= %s\n", access_token)
+		
+		
+		
+		publicKey, _ := ioutil.ReadFile("/home/jacques/pkeys/demo.rsa.pub")
+
+	
+
+	token, err := jwt.Parse(access_token, func(token *jwt.Token) (interface{}, error) {
+		return publicKey, nil
+	})
+
+	// branch out into the possible error from signing
+	switch err.(type) {
+
+	case nil: // no error
+
+		if !token.Valid { // but may still be invalid
+			w.WriteHeader(http.StatusUnauthorized)
+			fmt.Fprintln(w, "WHAT? Invalid Token? F*** off!")
+			return
+		}
+
+		// see stdout and watch for the CustomUserInfo, nicely unmarshalled
+		log.Printf("Someone accessed resricted area! Token:%+v\n", token)
+		w.Header().Set("Content-Type", "text/html")
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintln(w, "OK-AUTH-OK")
+
+	case *jwt.ValidationError: // something was wrong during the validation
+		vErr := err.(*jwt.ValidationError)
+
+		switch vErr.Errors {
+		case jwt.ValidationErrorExpired:
+			w.WriteHeader(http.StatusUnauthorized)
+			fmt.Fprintln(w, "Token Expired, get a new one.")
+			return
+
+		default:
+			w.WriteHeader(http.StatusInternalServerError)
+			fmt.Fprintln(w, "Error while Parsing Token!")
+			log.Printf("ValidationError error: %+v\n", vErr.Errors)
+			return
+		}
+
+	default: // something else went wrong
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintln(w, "Error while Parsing Token!")
+		log.Printf("Token parse error: %v\n", err)
+		return
+	}
+		
+		
+		
+		
+		
+		
+		
 
         h.ServeHTTPC(c, w, r)
     })
