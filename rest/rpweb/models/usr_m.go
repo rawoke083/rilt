@@ -82,7 +82,7 @@ func (self *Usr) Create() (int64, error) {
 
 func (self *Usr) FindByEmail(email string) bool {
 
-	err := storage.GetDb().Get(self, "SELECT email,hpasswd,confirmed FROM Usr WHERE email  = ?", email)
+	err := storage.GetDb().Get(self, "SELECT id,email,hpasswd,confirmed FROM Usr WHERE email  = ?", email)
 
 	if err != nil {
 		log.Println(err.Error())

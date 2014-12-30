@@ -8,7 +8,7 @@ import (
 	"github.com/rawoke083/rpweb/models"
 	"github.com/rawoke083/rpweb/storage"
 	_"github.com/rawoke083/rpweb/repos"
-	_"github.com/rawoke083/rpweb/services"
+
 	"github.com/rawoke083/rpweb/api"
 	"github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"
@@ -199,7 +199,7 @@ func main() {
 	goji.Get("/api/v1/concept/:id/*", api.Auth.IsAuth(api.Concept.FindById))
 	goji.Get("/api/v1/concept/:id", api.Auth.IsAuth(api.Concept.FindById))
 	
-	goji.Post("/api/v1/concept/*", api.Concept.New)
+	goji.Post("/api/v1/concept/",  api.Auth.IsAuth(api.Concept.New))
 
 
 	

@@ -26,7 +26,9 @@
     </head>
 	
 	<body >
-		<div ng-include="'./views/main.nav.html'"></div>	
+		<div ng-controller="NavCtrl" ng-init="Init()" ng-include="'./views/main.nav.html'"></div>	
+		
+		
 	<div class="container-fluid">
 	
 		<div ng-view></div> <!-- ng-view -->	
@@ -45,7 +47,7 @@
 
 	<script src="/vendor/angular.min.js"></script>
 	<script src="/vendor/angular-route.min.js"></script>  
-    <!-- <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.2.js"></script> -->
+
 
 	<script src="/vendor/jquery.min.js"></script>  
 	 
@@ -59,10 +61,20 @@
 	
 <script src="/vendor/sn/summernote.min.js"></script>
   
-  <script src="/vendor/sn/angular.summernote.min.js"></script>
+<script src="/vendor/sn/angular.summernote.min.js"></script>
   
-  <script src="/js/app.js"></script>
+  
+  
+<script src="/js/app.js"></script>
 
+
+<script src="/js/services.js"></script>
+
+<script src="/js/controllers.js"></script>
+
+
+
+<script src="/js/directives.js"></script>
 
 
   

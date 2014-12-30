@@ -1,4 +1,5 @@
-
+<div>{{InitNav()}}</div>
+ 
 <nav class="navbar navbar-default" role="navigation" >
   <div class="container-fluid" >
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -38,10 +39,33 @@
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
-      <ul class="nav navbar-nav navbar-right">
-		<li><button  ng-click="logout();"/>Logout</li>
-		<li>User:<a href="#" >{{Usr.Email}}</a></li>
+      
+
+      <ul  class="nav navbar-nav navbar-right">
 		
+		<li>{{Nav.Email}}</li>
+	
+		<li>
+			<div ng-show="Nav.IsLoggedIn">
+					<a href="#"  ng-click="SignOut()">Sign Out</a>
+			</div>
+		</li>
+		
+		
+		<li>
+			<div ng-hide="Nav.IsLoggedIn">
+				<a href="#"  ng-click="SignIn()">Sign In</a>
+			</div>
+		</li>
+	
+		
+		
+		
+		
+	
+
+  
+	
         <li><a href="#">Link</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
@@ -66,7 +90,7 @@
 	
 	
 	<a href="/usr/signup">User Sign Up</a>
-	<a href="/usr/sigin">User Sign In</a>
+
 	
 	
   
