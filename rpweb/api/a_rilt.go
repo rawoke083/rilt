@@ -5,24 +5,25 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
+	//"strconv"
 
 	_ "github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"
-
-	"github.com/rawoke083/rpweb/models"
+	 "github.com/rawoke083/rpweb/models"
 )
 
-//namespace-jiggle
-type ConceptAPI struct{}
 
-var Concept ConceptAPI
 
-func (ConceptAPI) New(c web.C, w http.ResponseWriter, req *http.Request) {
-log.Println("api.Concept.NEW")
-	concept := new(models.Concept)
 
-	if err := json.NewDecoder(req.Body).Decode(&concept); err != nil {
+
+func  (RiltAPI )New(c web.C, w http.ResponseWriter, req *http.Request) {
+	
+	log.Println("api.RiltAPI.NEW")
+
+	
+	rilt := new(models.Rilt)
+
+	if err := json.NewDecoder(req.Body).Decode(&rilt); err != nil {
 		w.WriteHeader(500)
 		fmt.Fprintf(w, "Bad POST"+err.Error())
 		return
@@ -30,13 +31,13 @@ log.Println("api.Concept.NEW")
 
 	
 	if UID, ok := c.Env["UID"].(float64); ok {
-		concept.Usr_Id = int64(UID)	
-		log.Println("api.Concept.NEW-UID=",	concept.Usr_Id )
+		rilt.Usr_Id = int64(UID)	
+		log.Println("api.rilt.NEW-UID=",	rilt.Usr_Id )
 	}
 	
 
 
-	if err := concept.Create(); err != nil {
+	if err := rilt.Create(); err != nil {
 		w.WriteHeader(500)
 		fmt.Fprintf(w, "Bad POST"+err.Error())
 		return
@@ -45,7 +46,7 @@ log.Println("api.Concept.NEW")
 	
 	//return result
 	w.WriteHeader(201)
-	bjson, err := json.Marshal(concept)
+	bjson, err := json.Marshal(rilt)
 	if err != nil {
 		fmt.Println("error:", err)
 	}
@@ -54,6 +55,7 @@ log.Println("api.Concept.NEW")
 
 }
 
+/***
 func (ConceptAPI) FindById(cc web.C, w http.ResponseWriter, req *http.Request) {
 
 	log.Println("api.Concept.FindById====")
@@ -82,3 +84,4 @@ func (ConceptAPI) FindById(cc web.C, w http.ResponseWriter, req *http.Request) {
 	} //end get model
 
 }
+*/

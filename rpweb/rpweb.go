@@ -202,6 +202,8 @@ func main() {
 	goji.Post("/api/v1/concept/",  api.Auth.IsAuth(api.Concept.New))
 
 
+
+	goji.Post("/api/v1/rilt/",api.NewRilt)
 	
 	
 	flag.Set("bind", ":8080")
