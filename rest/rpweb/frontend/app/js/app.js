@@ -1,37 +1,6 @@
 var app = angular.module('riltApp', ['ngRoute', 'summernote']);
 
 
-app.factory('TokenInterceptor', function($q, $window, $location) {
-	return {
-		request: function(config) {
-			config.headers = config.headers || {};
-			if ($window.localStorage.access_token) {
-				config.headers.AccessToken = $window.localStorage.access_token;
-			}
-			return config;
-		},
-		requestError: function(rejection) {
-			return $q.reject(rejection);
-		},
-		/* Set Authentication.isAuthenticated to true if 200 received */
-		response: function(response) {
-			if (response != null && response.status == 200 && $window.localStorage.access_token) {
-				//set aut=1   
-			}
-			return response || $q.when(response);
-		},
-		/* Revoke client authentication if 401 is received */
-		responseError: function(rejection) {
-			if (rejection != null && rejection.status === 401 && ($window.localStorage.access_token)) {
-				delete $window.localStorage.access_token;
-				//AuthenticationService.isAuthenticated = false;
-				$location.path("/usr/sigin");
-			}
-			return $q.reject(rejection);
-		}
-	};
-});
-
 
 
 
