@@ -5,11 +5,11 @@ import (
 	"flag"
 	"fmt"
 	
-	"github.com/rawoke083/rpweb/models"
-	"github.com/rawoke083/rpweb/storage"
-	_"github.com/rawoke083/rpweb/repos"
+	"github.com/rawoke083/rilt/rpweb/models"
+	"github.com/rawoke083/rilt/rpweb/storage"
+	_"github.com/rawoke083/rilt/rpweb/repos"
 
-	"github.com/rawoke083/rpweb/api"
+	"github.com/rawoke083/rilt/rpweb/api"
 	"github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"
 	"log"
@@ -203,7 +203,7 @@ func main() {
 
 
 
-	goji.Post("/api/v1/rilt/",api.NewRilt)
+	goji.Post("/api/v1/rilt/:conceptid",api.Rilt.New)
 	
 	
 	flag.Set("bind", ":8080")

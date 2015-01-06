@@ -10,7 +10,7 @@ import (
 	_ "github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"
 
-	"github.com/rawoke083/rpweb/models"
+	"github.com/rawoke083/rilt/rpweb/models"
 )
 
 

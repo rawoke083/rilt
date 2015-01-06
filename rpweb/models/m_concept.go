@@ -4,7 +4,7 @@ import (
 	_ "errors"
 	_ "fmt"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/rawoke083/rpweb/storage"
+	"github.com/rawoke083/rilt/rpweb/storage"
 	"log"
 
 

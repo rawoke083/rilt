@@ -4,7 +4,7 @@ import (
 	"code.google.com/p/go.crypto/bcrypt"
 	_ "errors"
 	_ "fmt"
-	"github.com/rawoke083/rpweb/storage"
+	"github.com/rawoke083/rilt/rpweb/storage"
 	"log"
 )
 

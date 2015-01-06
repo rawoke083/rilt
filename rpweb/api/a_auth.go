@@ -15,8 +15,8 @@ import (
 
 	jwt "github.com/dgrijalva/jwt-go"
 
-	"github.com/rawoke083/rpweb/models"
-	"github.com/rawoke083/rpweb/rpreq"
+	"github.com/rawoke083/rilt/rpweb/models"
+	"github.com/rawoke083/rilt/rpweb/rpreq"
 )
 
 

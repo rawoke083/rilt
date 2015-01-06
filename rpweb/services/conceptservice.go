@@ -1,7 +1,7 @@
 package services
 import 
 (
-	m "github.com/rawoke083/rpweb/models"
+	m "github.com/rawoke083/rilt/rpweb/models"
 )
 
 func  GetByIdd (cid int64){

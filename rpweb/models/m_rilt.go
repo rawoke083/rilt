@@ -3,7 +3,7 @@ package models
 import (
 	_ "errors"
 	
-	"github.com/rawoke083/rpweb/storage"
+	"github.com/rawoke083/rilt/rpweb/storage"
 	"log"
 
 	
