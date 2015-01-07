@@ -206,6 +206,17 @@ func main() {
 	goji.Post("/api/v1/rilt/:conceptid",api.Rilt.New)
 	
 	
+	
+	
+	
+	
+	
+	goji.Post("/api/v1/tag",api.Tag.New)
+	goji.Get("/api/v1/tag/:tagname",api.Tag.FindByName)
+	
+	
+	
+	
 	flag.Set("bind", ":8080")
 
 	goji.Serve()

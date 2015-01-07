@@ -31,3 +31,15 @@ type Concept struct {
 	Date_updated time.Time
 	Date_created time.Time
 }
+
+type Tag struct {
+	ID           int64
+	Name        string
+	Usr_Id       int64 `db:"usr_id"`
+	Type  int
+	Use_Count	int64
+	Date_created time.Time
+	ok int
+}
+
+type TagSlice []Tag

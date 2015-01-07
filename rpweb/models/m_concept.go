@@ -40,6 +40,7 @@ func (self *Concept) Create() error {
 
 func (self *Concept) FindById(cid int64) bool {
 
+
 	err := storage.GetDb().Get(self, "SELECT id,title,usr_id,description,date_created,date_updated FROM Concept  WHERE id = ?", cid)
 
 	if err != nil {
