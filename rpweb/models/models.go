@@ -21,6 +21,9 @@ type Rilt struct {
 	Text_Md  string
 	Type int
 	Date_created time.Time
+	Votes_Up int64
+	Votes_Down int64
+	
 }
 
 type Concept struct {

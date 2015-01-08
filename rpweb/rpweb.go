@@ -186,7 +186,8 @@ func main() {
 	
 	//Auth - login
 	goji.Post("/api/v1/auth/login",api.Auth.Login);
-	
+	goji.Get("/api/v1/auth/checkme",api.Auth.IsAuth(api.Auth.CheckMe));
+		
 	
 	//api-usr	
 	goji.Get("/api/v1/usr/*", api.Auth.IsAuth(APIUsrGet))
@@ -198,12 +199,15 @@ func main() {
 	
 	goji.Get("/api/v1/concept/:id/*", api.Auth.IsAuth(api.Concept.FindById))
 	goji.Get("/api/v1/concept/:id", api.Auth.IsAuth(api.Concept.FindById))
+	goji.Post("/api/v1/concept/",  api.Auth.IsAuth(api.Concept.NewUpdate))
+
+
+
+
+	goji.Post("/api/v1/rilt/",api.Rilt.NewUpdate)
+	goji.Get("/api/v1/rilt/:conceptid",api.Rilt.FindByConceptId)
+	goji.Get("/api/v1/rilt/:conceptid/*",api.Rilt.FindByConceptId)
 	
-	goji.Post("/api/v1/concept/",  api.Auth.IsAuth(api.Concept.New))
-
-
-
-	goji.Post("/api/v1/rilt/:conceptid",api.Rilt.New)
 	
 	
 	

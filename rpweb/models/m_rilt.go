@@ -36,10 +36,37 @@ func (self *Rilt) Create() error {
 	return nil
 
 }
-/*
-func (self *Rilt) FindById(cid int64) bool {
 
-	err := storage.GetDb().Get(self, "SELECT id,title,usr_id,description,date_created,date_updated FROM Concept  WHERE id = ?", cid)
+
+func (self *Rilt) Update() error {
+
+	// Prepare statement for inserting data
+	stmtIns, err := storage.GetDb().Prepare("Replace INTO Rilt (id,concept_id,text,text_md,date_created,usr_id,type) VALUES( ?,?, ?,?,now(),?,? )")
+	if err != nil {
+		log.Println("DB Rilt-Update:Prepare", err.Error())
+	}
+	defer stmtIns.Close() // Close the statement when we leave main() / the program terminates
+
+	result, err := stmtIns.Exec(self.ID,self.Concept_id, self.Text,self.Text_Md, self.Usr_Id,self.Type)
+	if err != nil {
+
+		log.Println("DB Rilt:Update", err.Error())
+		return err
+	}
+
+	if self.ID, err = result.LastInsertId(); err != nil {
+		log.Println("DB Rilt:Update", err.Error())
+		return err
+	}
+
+	log.Println("Rilt.Update:id", self.ID)
+	return nil
+
+}
+
+func (self *Rilt) FindByConceptId(cid int64) bool {
+
+	err := storage.GetDb().Get(self, "SELECT id,concept_id,usr_id,text,votes_up,votes_down,date_created FROM Rilt  WHERE concept_id = ?", cid)
 
 	if err != nil {
 		log.Println(err.Error())
@@ -48,4 +75,17 @@ func (self *Rilt) FindById(cid int64) bool {
 
 	return true
 }
-*/
+
+
+
+func (self *Rilt) FindById(id int64) bool {
+
+	err := storage.GetDb().Get(self, "SELECT id,concept_id,usr_id,text,votes_up,votes_down,date_created FROM Rilt  WHERE id = ?", id)
+
+	if err != nil {
+		log.Println(err.Error())
+		return false
+	}
+
+	return true
+}

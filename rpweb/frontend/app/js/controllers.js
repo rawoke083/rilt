@@ -1,6 +1,35 @@
 
 
+/**********************************************************************
+ * Concept
+ *********************************************************************/
+ app.controller('ConceptCtrl',function($scope, $http, $route, $routeParams, UsrAuth) {
 
+	$scope.updateConcept = function(concept) {
+		
+			
+		// Simple POST request example (passing data) :
+		$http.post('/api/v1/concept/', concept).
+		success(function(data, status, headers, config) {
+			
+			// this callback will be called asynchronously
+			// when the response is available
+			$scope.concept.feedback = data.FlashMsg;
+			$scope.concept.id = data.ID;
+		
+			
+		}).
+		error(function(data, status, headers, config) {
+			// called asynchronously if an error occurs
+			// or server returns response with an error status.
+			
+			$scope.feedback = data;
+			
+		});
+	}; //updateRilt END 
+	
+ });
+ 
 /***********************************************************************
  * Rilt
  **********************************************************************/
@@ -32,12 +61,16 @@ app.controller('RiltCtrl', function($scope, $http, $route, $routeParams, UsrAuth
 		});
 	}
 	$scope.updateRilt = function(rilt) {
+		rilt.type = parseInt(rilt.type);
+		rilt.concept_id = parseInt(rilt.concept_id);
+		
 		// Simple POST request example (passing data) :
-		$http.post('/api/v1/concept/', rilt).
+		$http.post('/api/v1/rilt/', rilt).
 		success(function(data, status, headers, config) {
 			// this callback will be called asynchronously
 			// when the response is available
 			$scope.feedback = data;
+			
 		}).
 		error(function(data, status, headers, config) {
 			// called asynchronously if an error occurs
@@ -63,6 +96,8 @@ app.controller('NavCtrl', function($rootScope, $scope, $http, $route, $routePara
 	$scope.InitNav = function (){
 		$scope.Nav.Email =  UsrAuth.getEmail();
 		$scope.Nav.IsLoggedIn =  UsrAuth.isAuthenticated();
+		
+		
 	}
 	
 	
@@ -84,6 +119,7 @@ app.controller('NavCtrl', function($rootScope, $scope, $http, $route, $routePara
 	
 	
 	$scope.InitNav();
+	 
 });
 
 

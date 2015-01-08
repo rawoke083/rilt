@@ -20,6 +20,13 @@ import (
 )
 
 
+
+func (AuthAPI) CheckMe(cc web.C, w http.ResponseWriter, req *http.Request) {
+	w.WriteHeader(200)
+		fmt.Fprintf(w, "Token OK")
+}
+
+
 func (AuthAPI) Login(cc web.C, w http.ResponseWriter, req *http.Request) {
 	log.Println("APIAuthLogin")
 
@@ -44,7 +51,7 @@ func (AuthAPI) Login(cc web.C, w http.ResponseWriter, req *http.Request) {
 	token := jwt.New(jwt.GetSigningMethod("RS256"))
 
 	token.Claims["ID"] = authUser.ID
-	token.Claims["exp"] = time.Now().Unix() + 36000
+	token.Claims["exp"] = time.Now().Unix() + 3000
 	token.Claims["R"] = req.RemoteAddr
 	token.Claims["E"] = authUser.Email
 

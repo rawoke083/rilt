@@ -26,8 +26,8 @@ app.config(function configure($routeProvider, $locationProvider,$httpProvider) {
 	$routeProvider.
 		//when('/', { controller: 'RiltCtrl', templateUrl: './views/home.html' }).
 	when('/rilt/new', {
-		templateUrl: './views/rilt.form.html',
-		controller: 'RiltCtrl',
+		templateUrl: './views/concept.form.html',
+		controller: 'ConceptCtrl',
 		resolve: { loginRequired: loginRequired }
 		
 	}).
@@ -60,6 +60,9 @@ app.run(function($window, UsrAuth) {
 	
 	if ($window.localStorage.access_token && $window.localStorage.access_token.length) {
 		UsrAuth.init($window.localStorage.email, $window.localStorage.id, $window.localStorage.access_token);
+	
+		//UsrAuth.isStillOk();
+	
 	}
 });
 

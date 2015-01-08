@@ -72,6 +72,28 @@ app.service('UsrAuth', function($http, $route, $routeParams, $location, $window,
 		return _Email;
 	};
 	
+	this.isStillOk = function(){
+		
+		
+			var deferred = $q.defer();
+			$http.get('/api/v1/auth/checkme').
+			success(function(data, status, headers, config) {
+					
+					
+				deferred.resolve(data);
+				
+			}).
+			error(function(data, status, headers, config) {
+				_LoggedIn = false;
+				alert("BAD");
+				deferred.reject(data);
+			});
+			
+			return deferred.promise;
+			
+		
+	};
+	
 	
 });
 
@@ -93,9 +115,9 @@ app.factory('TokenInterceptor', function($q, $window, $location,$injector) {
 		},
 		/* Set Authentication.isAuthenticated to true if 200 received */
 		response: function(response) {
-			if (response != null && response.status == 200 && $window.localStorage.access_token) {
+			//if (response != null && response.status == 200 && $window.localStorage.access_token) {
 				//set aut=1   
-			}
+			//}
 			return response || $q.when(response);
 		},
 		/* Revoke client authentication if 401 is received */
@@ -112,6 +134,10 @@ app.factory('TokenInterceptor', function($q, $window, $location,$injector) {
                 $location.path('/usr/signin');
                 
                 return $q.reject(rejection);
+                
+            }else if(rejection != null && rejection.status === 402  ) {
+					AuthService.logout(); 
+					alert("Expirred");
             }
             else {
                 return $q.reject(rejection);
