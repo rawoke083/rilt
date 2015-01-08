@@ -13,17 +13,18 @@ import (
 
 func (self *Rilt) Create() error {
 
+	
 	// Prepare statement for inserting data
-	stmtIns, err := storage.GetDb().Prepare("INSERT INTO Rilt (concept_id,text,text_md,date_created,usr_id,type) VALUES( ?, ?,?,now(),?,? )")
+	stmtIns, err := storage.GetDb().Prepare("INSERT INTO Rilt (concept_id,text,text_md,date_created,usr_id,type,votes_up,votes_down) VALUES( ?, ?,?,now(),?,?,0,0 )")
 	if err != nil {
-		log.Println("DB Rilt:Prepare", err.Error())
+		log.Println("DB Rilt:Prepare1", err.Error())
 	}
 	defer stmtIns.Close() // Close the statement when we leave main() / the program terminates
 
 	result, err := stmtIns.Exec(self.Concept_id, self.Text,self.Text_Md, self.Usr_Id,self.Type)
 	if err != nil {
 
-		log.Println("DB Rilt:insert", err.Error())
+		log.Println("DB Rilt:insert1", err.Error())
 		return err
 	}
 
@@ -41,7 +42,7 @@ func (self *Rilt) Create() error {
 func (self *Rilt) Update() error {
 
 	// Prepare statement for inserting data
-	stmtIns, err := storage.GetDb().Prepare("Replace INTO Rilt (id,concept_id,text,text_md,date_created,usr_id,type) VALUES( ?,?, ?,?,now(),?,? )")
+	stmtIns, err := storage.GetDb().Prepare("Replace INTO Rilt (id,concept_id,text,text_md,date_created,usr_id,type,votes_up,votes_down,ok) VALUES( ?,?, ?,?,now(),?,? ,0,0,0)")
 	if err != nil {
 		log.Println("DB Rilt-Update:Prepare", err.Error())
 	}

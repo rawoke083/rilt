@@ -25,7 +25,7 @@ app.config(function configure($routeProvider, $locationProvider,$httpProvider) {
 	
 	$routeProvider.
 		//when('/', { controller: 'RiltCtrl', templateUrl: './views/home.html' }).
-	when('/rilt/new', {
+	when('/c/new', {
 		templateUrl: './views/concept.form.html',
 		controller: 'ConceptCtrl',
 		resolve: { loginRequired: loginRequired }

@@ -34,6 +34,14 @@ func (RiltAPI) NewUpdate(c web.C, w http.ResponseWriter, req *http.Request) {
 
 
 	if(rilt.ID  < 1 ) {
+		log.Println("api.RiltAPI.NEW=========>")
+		conceptCheck := new(models.Concept);
+		if(!conceptCheck.FindById(rilt.Concept_id)){
+			w.WriteHeader(404)
+			fmt.Fprintf(w, "Concept not found")
+			return
+		}
+		
 		
 		if err := rilt.Create(); err != nil {
 			w.WriteHeader(500)
@@ -44,17 +52,29 @@ func (RiltAPI) NewUpdate(c web.C, w http.ResponseWriter, req *http.Request) {
 	}else {
 		
 		
-		
+		log.Println("api.RiltAPI.UPDATE=========>")
 		riltCheck := new(models.Rilt);
+		
 		if( ! riltCheck.FindById(rilt.ID) ) {
 			w.WriteHeader(404)
-			fmt.Fprintf(w, "Concept not found")
+			fmt.Fprintf(w, "riltCheck not found")
 		}
 		
 		if(  riltCheck.Usr_Id != rilt.Usr_Id ) {
 			w.WriteHeader(500)
 			fmt.Fprintf(w, "WWrong User")
 		}
+		
+		
+		
+		conceptCheck := new(models.Concept);
+		if(!conceptCheck.FindById(riltCheck.Concept_id)){
+			w.WriteHeader(404)
+			fmt.Fprintf(w, "conceptCheck not found")
+			return;
+		}
+		
+		
 		
 		
 		if err := rilt.Update(); err != nil {
@@ -66,14 +86,6 @@ func (RiltAPI) NewUpdate(c web.C, w http.ResponseWriter, req *http.Request) {
 
 
 
-
-
-
-	if err := rilt.Create(); err != nil {
-		w.WriteHeader(500)
-		fmt.Fprintf(w, "Bad POST"+err.Error())
-		return
-	}
 
 	//return result
 	w.WriteHeader(201)

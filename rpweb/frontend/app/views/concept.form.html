@@ -1,0 +1,80 @@
+<div>
+	<h4 >Concept FORM HTML
+	</h4>
+	
+	<p ng-bind="concept.feedback"></p>
+	
+  
+  <form novalidate class="simple-form">
+	Concept-id: <input type="text" ng-model="concept.id" /><br />
+	    
+	    
+    Concept: <input type="text" ng-model="concept.title" /><br />
+    
+    
+    
+    Concept-Desc: <textarea  ng-model="concept.description" /></textarea><br />
+  
+      
+    Tags: <input type="text" ng-model="concept.tags"  />
+    
+    <button ng-click="reset()">RESET</button>
+    <button ng-click="updateConcept(concept)">SAVE</button>
+  </form>
+  
+  
+  <h2>Preview</h2> 
+   <div markdownn="concept.description">M.D</div>
+  
+</div>
+
+<br />
+
+<br />
+<br />
+
+<div ng-controller="RiltCtrl">
+		<h4 >Rilt FORM HTML
+	</h4>
+	
+	<p ng-bind="rilt.feedback"></p>
+	
+  
+  <form novalidate class="simple-form">
+	rilt-id: <input type="text" ng-model="rilt.id" /><br />
+	    
+	    
+    rilt-Concept-id: <input type="text" ng-model="cid" /><br />
+    
+    
+    
+    rilt-text: <textarea  ng-model="rilt.text" /></textarea><br />
+        
+    
+    
+    <label>Rilt Type</label>
+    <div class="form-group">
+        <div class="radio">
+            <label>
+                <input type="radio" name="rilt.type" value="0" ng-model="rilt.type">
+                Rilt
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="rilt.type" value="1" ng-model="rilt.type">
+                Mnemomic
+            </label>
+        </div>
+    </div>
+    
+    
+    
+    <button ng-click="reset()">RESET</button>
+    <button ng-click="updateRilt(rilt)">SAVxE</button>
+  </form>
+  
+  
+  <h2>Preview</h2> 
+   <div markdownn="rilt.text">-rilt-M.D</div>
+</div>

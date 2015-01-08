@@ -3,7 +3,7 @@
 /**********************************************************************
  * Concept
  *********************************************************************/
- app.controller('ConceptCtrl',function($scope, $http, $route, $routeParams, UsrAuth) {
+ app.controller('ConceptCtrl',function($rootScope,$scope, $http, $route, $routeParams, UsrAuth) {
 
 	$scope.updateConcept = function(concept) {
 		
@@ -16,6 +16,8 @@
 			// when the response is available
 			$scope.concept.feedback = data.FlashMsg;
 			$scope.concept.id = data.ID;
+			
+			$rootScope.cid = data.ID;
 		
 			
 		}).
@@ -33,7 +35,8 @@
 /***********************************************************************
  * Rilt
  **********************************************************************/
-app.controller('RiltCtrl', function($scope, $http, $route, $routeParams, UsrAuth) {
+app.controller('RiltCtrl', function($rootScope,$scope, $http, $route, $routeParams, UsrAuth) {
+	
 	// $scope.isAuth = UsrAuth.isAuthenticated;
 	$scope.init_sn = function() {
 		$('.summernote').summernote();
@@ -62,7 +65,8 @@ app.controller('RiltCtrl', function($scope, $http, $route, $routeParams, UsrAuth
 	}
 	$scope.updateRilt = function(rilt) {
 		rilt.type = parseInt(rilt.type);
-		rilt.concept_id = parseInt(rilt.concept_id);
+		rilt.concept_id = parseInt($rootScope.cid);
+		rilt.id = parseInt(rilt.id);
 		
 		// Simple POST request example (passing data) :
 		$http.post('/api/v1/rilt/', rilt).
@@ -70,6 +74,7 @@ app.controller('RiltCtrl', function($scope, $http, $route, $routeParams, UsrAuth
 			// this callback will be called asynchronously
 			// when the response is available
 			$scope.feedback = data;
+			rilt.id = data.ID;
 			
 		}).
 		error(function(data, status, headers, config) {
@@ -81,6 +86,17 @@ app.controller('RiltCtrl', function($scope, $http, $route, $routeParams, UsrAuth
 	if ($routeParams.riltId) {
 		$scope.getRilt($routeParams.riltId);
 	}
+	
+	
+	$scope.InitRilt = function() {
+		
+	};
+	
+	
+	$scope.InitRilt();
+	
+	
+	
 });
 
 
