@@ -31,6 +31,10 @@ app.config(function configure($routeProvider, $locationProvider,$httpProvider) {
 		resolve: { loginRequired: loginRequired }
 		
 	}).
+	when('/c/:id', {
+		templateUrl: './views/concept.view.html',
+		controller: 'ConceptCtrl'		
+	}).
 	when('/rilt/feeds/:feedtype', {
 		templateUrl: './views/rilt.html',
 		controller: 'RiltCtrl'

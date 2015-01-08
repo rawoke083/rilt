@@ -4,6 +4,63 @@
  * Concept
  *********************************************************************/
  app.controller('ConceptCtrl',function($rootScope,$scope, $http, $route, $routeParams, UsrAuth) {
+	
+	$scope.concept= { feedback:""};
+	$rootScope.cid = 0;
+	
+    $scope.getConcept 	= function(id){
+		//alert("ccc");
+		if(!id){
+			
+			if ($routeParams.id) {
+				id =  $routeParams.id;
+			}
+		}//end id-check
+		
+		
+		if (!id ) {
+			return;
+		}
+		
+		
+		$http.get('/api/v1/concept/' + id).
+		success(function(data, status, headers, config) {
+			
+			$scope.concept = data;
+			$rootScope.cid = data.ID;
+			
+			
+			
+		}).
+		error(function(data, status, headers, config) {
+			// log error
+			$scope.concept.feedback = data;
+		});
+		
+		
+		
+	}; //end getConcept
+	
+	$scope.voteConcept = function(conceptId,voteDir){
+		alert(conceptId);
+		alert(voteDir);
+		
+		
+		$http.post('/api/v1/concept/' + id).
+		success(function(data, status, headers, config) {
+			
+			$scope.concept = data;
+			
+		}).
+		error(function(data, status, headers, config) {
+			// log error
+			$scope.concept.feedback = data;
+		});
+		
+		
+		
+	};
+	
 
 	$scope.updateConcept = function(concept) {
 		
@@ -51,11 +108,22 @@ app.controller('RiltCtrl', function($rootScope,$scope, $http, $route, $routePara
 			alert(data)
 		});
 	}
-	$scope.getRilt = function(id) {
-		$http.get('/api/v1/concept/' + id).
+	$scope.getRiltsForConcept = function(conceptId,offset) {
+		
+		
+		if(!conceptId){
+			
+			if ($routeParams.id) {
+				conceptId =  $routeParams.id;				
+			}
+		}//end id-check
+		
+		
+		
+		$http.get('/api/v1/rilt/' + conceptId + "/" + offset).
 		success(function(data, status, headers, config) {
 			
-			$scope.rilt = data;
+			$scope.rilts = data;
 			
 		}).
 		error(function(data, status, headers, config) {

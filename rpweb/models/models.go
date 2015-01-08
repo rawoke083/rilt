@@ -46,3 +46,5 @@ type Tag struct {
 }
 
 type TagSlice []Tag
+type RiltSlice []Rilt
+

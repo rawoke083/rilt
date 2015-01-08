@@ -200,13 +200,17 @@ func main() {
 	goji.Get("/api/v1/concept/:id/*", api.Auth.IsAuth(api.Concept.FindById))
 	goji.Get("/api/v1/concept/:id", api.Auth.IsAuth(api.Concept.FindById))
 	goji.Post("/api/v1/concept/",  api.Auth.IsAuth(api.Concept.NewUpdate))
+	
+	
+	goji.Post("/api/v1/concept/",  api.Auth.IsAuth(api.Concept.NewUpdate))
 
 
 
 
 	goji.Post("/api/v1/rilt/",api.Rilt.NewUpdate)
 	goji.Get("/api/v1/rilt/:conceptid",api.Rilt.FindByConceptId)
-	goji.Get("/api/v1/rilt/:conceptid/*",api.Rilt.FindByConceptId)
+	
+	goji.Get("/api/v1/rilt/:conceptid/:offset",api.Rilt.FindByConceptIdList)
 	
 	
 	

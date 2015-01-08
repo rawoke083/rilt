@@ -97,6 +97,39 @@ func (RiltAPI) NewUpdate(c web.C, w http.ResponseWriter, req *http.Request) {
 
 }
 
+func (RiltAPI) FindByConceptIdList(cc web.C, w http.ResponseWriter, req *http.Request){
+	
+	maxCount :=  int64(10)
+	
+	cid, err := strconv.ParseInt(cc.URLParams["conceptid"], 10, 64)
+	if err != nil {
+		http.Error(w, http.StatusText(404), 404)
+		return
+	}
+	
+	offset, err := strconv.ParseInt(cc.URLParams["offset"], 10, 64)
+	if err != nil {
+		http.Error(w, http.StatusText(404), 404)
+		return
+	}
+	
+	
+	
+	rilts := models.RiltSlice{}
+	
+	if rilts.FindByConceptIdList(cid,offset,maxCount) {
+
+		bjson, err := json.Marshal(rilts)
+		if err != nil {
+			fmt.Println("error:", err)
+		}
+
+		fmt.Fprintf(w, string(bjson))
+
+	} //end get model
+}
+
+
 func (RiltAPI) FindByConceptId(cc web.C, w http.ResponseWriter, req *http.Request) {
 
 	log.Println("api.RiltAPI.FindByConceptId====")
@@ -121,3 +154,35 @@ func (RiltAPI) FindByConceptId(cc web.C, w http.ResponseWriter, req *http.Reques
 	} //end get model
 
 }
+
+
+func (RiltAPI) Vote(cc web.C, w http.ResponseWriter, req *http.Request) {
+
+	log.Println("api.RiltAPI.Vote====")
+
+	riltId, err := strconv.ParseInt(cc.URLParams["riltid"], 10, 64)
+	if err != nil {
+		http.Error(w, http.StatusText(404), 404)
+		return
+	}
+	
+	voteDir, err := strconv.ParseInt(cc.URLParams["votedir"], 10, 64)
+	if err != nil {
+		http.Error(w, http.StatusText(404), 404)
+		return
+	}
+
+	rilt := new(models.Rilt)
+	if !rilt.FindById(riltId) {
+		w.WriteHeader(404)
+		fmt.Fprintf(w, "No rilt-id")
+		return
+	}
+		
+	if ! rilt.Vote(voteDir) {
+		w.WriteHeader(500)
+		fmt.Fprintf(w, "Cant vote")
+		return
+	}
+	
+}//end vote

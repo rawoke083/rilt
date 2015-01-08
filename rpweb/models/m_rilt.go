@@ -65,6 +65,23 @@ func (self *Rilt) Update() error {
 
 }
 
+
+
+func (self *RiltSlice) FindByConceptIdList(cid int64,offset int64,maxCount int64) bool {
+
+	
+	err := storage.GetDb().Select(self, "SELECT id,concept_id,usr_id,text,votes_up,votes_down,date_created FROM Rilt  WHERE concept_id = ? limit ?,?",cid,offset,maxCount)
+
+
+	if err != nil {
+		log.Println(err.Error())
+		return false
+	}
+
+	return true
+}
+
+
 func (self *Rilt) FindByConceptId(cid int64) bool {
 
 	err := storage.GetDb().Get(self, "SELECT id,concept_id,usr_id,text,votes_up,votes_down,date_created FROM Rilt  WHERE concept_id = ?", cid)
@@ -79,6 +96,7 @@ func (self *Rilt) FindByConceptId(cid int64) bool {
 
 
 
+
 func (self *Rilt) FindById(id int64) bool {
 
 	err := storage.GetDb().Get(self, "SELECT id,concept_id,usr_id,text,votes_up,votes_down,date_created FROM Rilt  WHERE id = ?", id)
@@ -90,3 +108,38 @@ func (self *Rilt) FindById(id int64) bool {
 
 	return true
 }
+
+func (self *Rilt) Vote( voteVal int64) bool {
+	
+	// Prepare statement for inserting data
+	
+	squery := "Update  Rilt SET votes_up =  votes_up + 1 WHERE id = ?"
+	
+	if(voteVal < 1 ){
+		squery = "Update  Rilt SET votes_up =  votes_down - 1 WHERE id = ?"
+		
+	}
+	stmtVote, err := storage.GetDb().Prepare(squery)
+		
+	
+	if err != nil {
+		log.Println("DB Rilt-Vote:Prepare", err.Error())
+	}
+	defer stmtVote.Close() // Close the statement when we leave main() / the program terminates
+
+	result, err := stmtVote.Exec(self.ID)
+	if err != nil {
+
+		log.Println("DB Rilt:Update", err.Error())
+		return false
+	}
+
+	if self.ID, err = result.LastInsertId(); err != nil {
+		log.Println("DB Rilt:Update", err.Error())
+		return false
+	}
+
+	log.Println("Rilt.Update:id", self.ID)
+	return true
+}
+

@@ -1,0 +1,25 @@
+<div ng-controller="ConceptCtrl" ng-init="getConcept(0)">
+	
+	<h4 >
+		Concept View HTML
+	</h4>
+	
+	<p ng-bind="concept.feedback"></p>
+	
+	<h2 ng-bind="concept.Title"></h2>
+	
+	<div>
+		<p ng-bind="concept.Description"></p>
+	</div>
+	
+	<h5  ng-bind="concept.Tags"  /></h5>
+ 
+	
+	<div ng-controller="RiltCtrl" ng-init="getRiltsForConcept(cid,0)">
+		<ul>
+			<li ng-repeat="r in rilts">
+				{{ r.Text }}
+			</li>
+		</ul>
+	</div>
+</div>

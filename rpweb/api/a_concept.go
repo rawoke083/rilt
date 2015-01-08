@@ -107,7 +107,12 @@ func (ConceptAPI) FindById(cc web.C, w http.ResponseWriter, req *http.Request) {
 
 		log.Printf("\n\n%#v\n", concept)
 		fmt.Fprintf(w, string(bjson))
-
+		return;
 	} //end get model
+	
+	
+	http.Error(w, "Concept not found", 404)
+	
+	return
 
 }

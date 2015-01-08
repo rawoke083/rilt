@@ -39,7 +39,7 @@ func (self *Usr) AuthAndInit(Email string, Password string) bool {
 
 	}
 
-	log.Println("OK-USR-AUTH") // nil means it is a match
+	log.Println("OK-USR-AUTH-ok") // nil means it is a match
 
 	return true
 }
