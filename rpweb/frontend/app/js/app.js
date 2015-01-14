@@ -1,7 +1,4 @@
-var app = angular.module('riltApp', ['ngRoute', 'summernote']);
-
-
-
+var app = angular.module('riltApp', ['ngRoute','textAngular']);
 
 
 var loginRequired = function($location, $q,UsrAuth) {  
@@ -51,8 +48,12 @@ app.config(function configure($routeProvider, $locationProvider,$httpProvider) {
 		templateUrl: './views/usr.login.form.html',
 		controller: 'UsrCtrl'
 	}).
+	when('/', {
+        templateUrl: './views/index.notreg.html',
+        controller: 'ConceptCtrl'
+      }).
 	otherwise({
-		redirect: '/'
+		redirect: '/koos'
 	});
 	$locationProvider.html5Mode(true);
 	

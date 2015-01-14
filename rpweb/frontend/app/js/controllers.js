@@ -92,7 +92,7 @@
 /***********************************************************************
  * Rilt
  **********************************************************************/
-app.controller('RiltCtrl', function($rootScope,$scope, $http, $route, $routeParams, UsrAuth) {
+app.controller('RiltCtrl', function($rootScope,$scope, $http, $route, $routeParams,$sce, $location, UsrAuth) {
 	
 	// $scope.isAuth = UsrAuth.isAuthenticated;
 	$scope.init_sn = function() {
@@ -125,6 +125,8 @@ app.controller('RiltCtrl', function($rootScope,$scope, $http, $route, $routePara
 			
 			$scope.rilts = data;
 			
+			$scope.trustAsHtml = $sce.trustAsHtml;
+			
 		}).
 		error(function(data, status, headers, config) {
 			// log error
@@ -143,6 +145,7 @@ app.controller('RiltCtrl', function($rootScope,$scope, $http, $route, $routePara
 			// when the response is available
 			$scope.feedback = data;
 			rilt.id = data.ID;
+			$location.path('/c/'+$rootScope.cid);
 			
 		}).
 		error(function(data, status, headers, config) {
@@ -178,16 +181,17 @@ app.controller('NavCtrl', function($rootScope, $scope, $http, $route, $routePara
 	};
 
 	$scope.InitNav = function (){
+		
 		$scope.Nav.Email =  UsrAuth.getEmail();
 		$scope.Nav.IsLoggedIn =  UsrAuth.isAuthenticated();
-		
+			
 		
 	}
 	
 	
 	$scope.SignOut = function (){
 		UsrAuth.logout();		
-		$scope.InitNav();
+		
 		$location.path('/');	
 	
 	}
@@ -195,14 +199,14 @@ app.controller('NavCtrl', function($rootScope, $scope, $http, $route, $routePara
 
 
 	$scope.SignIn = function (){
-		UsrAuth.logout();		
-		$scope.InitNav();
+		UsrAuth.logout();				
 		$location.path('/usr/signin');	
+		
 	
 	}
 	
 	
-	$scope.InitNav();
+	//$scope.InitNav();
 	 
 });
 

@@ -1,99 +1,184 @@
-<div>{{InitNav()}}</div>
+<div  ng-controller="NavCtrl"  class="navbar navbar-inverse">
+<div>
+	{{InitNav()}}
+</div>
+
+
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    
+    <a class="navbar-brand" href="/">
+	
+		<!--
+		<span style="font-size:120%;line-height:90%;" class="span16 label label-primary">
+			RILT<strong>Pedia</strong>			
+			<img style="top:-200px;" height="32px;" src="images/b.png"/>
+		</span>
+		-->
+		
+		<span style="font-size:120%;line-height:90%;" class="span16">
+			RILT<strong>Pedia</strong>			
+			<img style="position:relative;top:-1px;" height="32px;" src="images/b4.png"/>
+		</span>
+    </a>
+   
+   
+   
+   
+   
+       
+  </div>
  
-<nav class="navbar navbar-default" role="navigation" >
-  <div class="container-fluid" >
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/">Brand</a>
-      
- 
-      
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-      <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      
-
-      <ul  class="nav navbar-nav navbar-right">
-		
-		<li>{{Nav.Email}}</li>
-	
-		<li>
-			<div ng-show="Nav.IsLoggedIn">
-					<a href="#"  ng-click="SignOut()">Sign Out</a>
+   <div class="col-sm-4 col-md-4">
+    <form class="navbar-form" role="search">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit">
+					&nbsp;&nbsp;<Strong>Search</Strong>&nbsp;&nbsp;<i class="glyphicon glyphicon-search"></i>
+                 </button>
+                 
+                 <button class="btn btn-default" type="submit">
+					&nbsp;&nbsp;<strong>Browse</strong>
+					
+					&nbsp;&nbsp;<i class="fa fa-eye"></i>
+                 </button>
 			</div>
-		</li>
-		
-		
-		<li>
-			<div ng-hide="Nav.IsLoggedIn">
-				<a href="#"  ng-click="SignIn()">Sign In</a>
-			</div>
-		</li>
-	
-		
-		
-		
-		
-	
+      </div>
+      
 
-  
-	
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+      
+      
+	</form>
+   </div>
 
 
-	<a href="/c/feeds/latest">latest</a>
-	<a href="/c/new">new</a>
-	<a href="/c/1">Rilt-1</a>
-	<a href="/c/2">Rilt-2</a>
+
+
+
+
+ <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="" >
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+    <ul class="nav navbar-nav navbar-right">
+     
+     
+	
+	  
+	  
+	  <li class='active buttonNavSquare' ng-class="{ngHideCustom:!Nav.IsLoggedIn}">	
+					
+		<a href="/c/new"   class='buttonNavSquare navButton2' >
+			
+			<strong>Add Concept</strong>
+			</a>							
+					
+	  </li>
+	  
+     
+	 
+
+
+	  
+	  
+	  <li ng-class="{ngHideCustom:Nav.IsLoggedIn}">
+	  	<a href="/usr/signup" ><span style="color:#e67200;"  class="glyphicon glyphicon-certificate" aria-hidden="true"></span>&nbsp;<strong>Register</strong></a>			
+	  </li>
+	  
+	  <li ng-class="{ngHideCustom:Nav.IsLoggedIn}">
+	  	<a href="/usr/signin"  ng-click="SignIn()"><span style="color:#c90707;" class="text-primary glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;<strong>SignIn</strong></a>			
+	  </li>
+	  
+	  
+   
+	 
+	  
+	  
+	 
+	  
+      
+      <li class="dropdown" ng-class="{ngHideCustom:!Nav.IsLoggedIn}">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span  style="color:#c90707;" class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;<strong ><span style="color:#c90707;" >{{Nav.Email}}</span></strong> <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            
+             
+          <li>
+			  
+			
+			  <a href="#"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp; Tag Subbscriptions</a>
+          
+          </li>
+          
+           <li class="divider"></li>
+          
+         
+          
+          
+          <li>			  			
+			  <a href="#"><img src='images/b.png' height="28px" />&nbsp;&nbsp; My Rilts</a>          
+          </li>
+          
+          
+           <li>
+			  
+			
+			  <a href="#"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp; My Tags</a>
+          
+          </li>
+          
+          
+          <li class="divider"></li>
+           
+          
+          <li><a href="#"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp; Profile & Privacy</a></li>
+          <li><a href="#"></a></li>
+          
+          <li class="divider"></li>
+          <li><a ng-click="SignOut()" class="text-center" href="#">Sign out</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+
+
+
+<!--
+
+	<a href="/rilt/feeds/latest">latest</a>
+	<a href="/rilt/new">new</a>
+	<a href="/rilt/1">Rilt-1</a>
+	<a href="/rilt/2">Rilt-2</a>
 	
 	
 	<a href="/usr/signup">User Sign Up</a>
-
+	<a href="/usr/sigin">User Sign In</a>
 	
 	
-  
+-->  
 
 
-</div>
+

@@ -17,8 +17,8 @@
 	
 	<div ng-controller="RiltCtrl" ng-init="getRiltsForConcept(cid,0)">
 		<ul>
-			<li ng-repeat="r in rilts">
-				{{ r.Text }}
+			<li ng-repeat="r in rilts">				
+				<p ng-bind-html="trustAsHtml(r.Text)"></p>
 			</li>
 		</ul>
 	</div>

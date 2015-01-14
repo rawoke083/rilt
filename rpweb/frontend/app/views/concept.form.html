@@ -1,80 +1,185 @@
-<div>
-	<h4 >Concept FORM HTML
-	</h4>
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="col-md-7">
+		<div  class="panel panel-default center-text" >
+			<div class="panel-body ">
+				<h3>
+					Concept&nbsp;&nbsp;<i  class="fa fa-cubes"></i>
+				</h3>
+				<span style="display:none;" ng-hide ng-bind="concept.feedback"></span>
+				<form novalidate class="simple-form" class="inactive" id="conceptForm">
+					<div class="form-group">
+						<label class="control-label " for="concept.title">
+						<i style="color:green;" class="fa fa-pencil"></i>
+						Text
+						</label>
+						<input class="form-control" id="concept.title" type="text" value="Titlet" ng-model="concept.title" placeholder="Short descriptive text for concept" >
+					</div>
+					<div class="form-group ng-hide ">
+						<label class="control-label" for="concept.description">Extra Description(Optional) <b class="caret"></b></label>
+						<textarea class="ng-hide" class="form-control" id="concept.description" ng-model="concept.description" rows="1"></textarea>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="concept.tags">
+						<i style="color:#4582ec;" class="fa fa-tag"></i>
+						Category Tags	  
+						</label>
+						<input class="form-control" id="concept.tags" type="text" value="Tags" ng-model="concept.tags" placeholder="Science,History,Math,Trivia,Sport">
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="concept.tags">
+						<i style="color:#4582ec;" class="fa fa-tags"></i>
+						Sub-Tags
+						</label>
+						
+						<input style="display:none;" type="hidden" ng-model="concept.id" />
+						<input class="form-control" id="concept.tags" type="text" value="Tags" ng-model="concept.tags" placeholder="physics,chemistry,calculus,biology,medical,trivia,physicology">
+						
+					</div>
+					
+
+				</form>
+			</div>
+			<!-- PB-->
+			<div class="panel-footer">
+				<div class="form-group">
+					<button class="btn btn-danger btn-sm active" ng-click="updateConcept(concept)">
+					<i class="fa fa-save"></i>
+					&nbsp;&nbsp;&nbsp;<strong>Save</strong>&nbsp;&nbsp;&nbsp;</button>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		<!-- poutside -->  
+		<div  class="panel panel-default center-text"  ng-controller="RiltCtrl" ng-disabled="!cid">
+			<div class="panel-body " ng-disabled="!cid" ng-class="{'text-muted':!cid}">
+				<h3 >
+					Rilt
+					
+					<span class="text-mutedd smalll">
+						<img ng-class="{'text-muted':!cid}" style="top:-200px;" height="32px;" src="images/b.png"/>
+						(Remember It Like This)</span>
+				</h3>
+				
+				<form novalidate class="simple-form">
+				
+					<fieldset  ng-disabled="!cid">
+					
+					<div class="form-group" ng-disabled="!cid">											
+						<text-angular ng-disabled="!cid" class="active" ta-toolbar-class="btn-toolbar active" ta-toolbar-group-class="active btn-group" ta-toolbar-button-class="btn btn-default active" ta-toolbar-button-active-class="active"
+						ta-toolbar="[['p','h5','h6','pre','quote','underline'],['bold','italics'],['insertImage']]"
+						rows="10"
+						placeholder="Describe how YOU rememeber it !                                                       "
+						ng-model="rilt.text"></text-angular>
+
+						
+					</div>
+		
+					
+					
+					
+					<div class="form-group">
+						<label>Type</label> <br />
+						<label class="radio-inline active">
+							
+							<input checked="true" id="rilt.type" class="active" type="radio" name="rilt.type"  value="0"  ng-model="rilt.type">Rilt
+							
+						</label>
+						<label class="radio-inline"><input type="radio" name="rilt.type"  value="1"  ng-model="rilt.type">Mnemomic</label>						
+						
+					</div>
+					
+					<input type="hidden" ng-model="rilt.id" />
+					<input type="hidden" ng-model="cid" />
+					
+					
+					</fieldset>
+				</form>
+			</div>
+			<!-- PB-->
+			<div class="panel-footer">
+				<div class="form-group">
+					<button ng-disabled="!cid"  class="btn btn-success btn-sm active" ng-click="updateRilt(rilt)">
+						
+					<i class="fa fa-save"></i>
+					&nbsp;&nbsp;&nbsp;<strong>Save</strong>&nbsp;&nbsp;&nbsp;</button>
+				</div>
+			</div>
+		</div>
+		<!-- poutside -->
+	</div>
 	
-	<p ng-bind="concept.feedback"></p>
 	
-  
-  <form novalidate class="simple-form">
-	Concept-id: <input type="text" ng-model="concept.id" /><br />
-	    
-	    
-    Concept: <input type="text" ng-model="concept.title" /><br />
-    
-    
-    
-    Concept-Desc: <textarea  ng-model="concept.description" /></textarea><br />
-  
-      
-    Tags: <input type="text" ng-model="concept.tags"  />
-    
-    <button ng-click="reset()">RESET</button>
-    <button ng-click="updateConcept(concept)">SAVE</button>
-  </form>
-  
-  
-  <h2>Preview</h2> 
-   <div markdownn="concept.description">M.D</div>
-  
+	<!-- end middle -->
+	<div class="col-md-4">
+		
+		<div class="panel panel-success">
+			<div class="panel-heading"><h4>What are <strong>Concepts</strong> and Rilts ?</h4></div>
+			<div class="panel-body">
+				<p>
+					Concepts are things like:
+					<ul style="line-height:1.8;">
+						<li style="line-height:1.8;">
+							<em><strong>"The Speed Of Sound"</strong></em>,
+						</li>
+						
+						<li style="line-height:1.8;"><em><strong>"The End Of World War 2"</strong></em>
+						</li>
+						
+						
+						<li>
+							<em><strong>"Taxonomy(biolog) Names"</strong></em>,
+						</li>
+						
+						
+						
+					</ul>
+					
+					
+				</p>
+			</div>
+		</div>
+		
+		
+	</div>
 </div>
-
-<br />
-
 <br />
 <br />
+<br />
 
+
+<!--
 <div ng-controller="RiltCtrl">
-		<h4 >Rilt FORM HTML
+	<h4 >Rilt FORM HTML
 	</h4>
-	
 	<p ng-bind="rilt.feedback"></p>
-	
-  
-  <form novalidate class="simple-form">
-	rilt-id: <input type="text" ng-model="rilt.id" /><br />
-	    
-	    
-    rilt-Concept-id: <input type="text" ng-model="cid" /><br />
-    
-    
-    
-    rilt-text: <textarea  ng-model="rilt.text" /></textarea><br />
-        
-    
-    
-    <label>Rilt Type</label>
-    <div class="form-group">
-        <div class="radio">
-            <label>
-                <input type="radio" name="rilt.type" value="0" ng-model="rilt.type">
-                Rilt
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input type="radio" name="rilt.type" value="1" ng-model="rilt.type">
-                Mnemomic
-            </label>
-        </div>
-    </div>
-    
-    
-    
-    <button ng-click="reset()">RESET</button>
-    <button ng-click="updateRilt(rilt)">SAVxE</button>
-  </form>
-  
-  
-  <h2>Preview</h2> 
-   <div markdownn="rilt.text">-rilt-M.D</div>
+	<form novalidate class="simple-form">
+		rilt-id: <input type="text" ng-model="rilt.id" /><br />
+		rilt-Concept-id: <input type="text" ng-model="cid" /><br />
+		rilt-text: 
+		<textarea  ng-model="rilt.text" /></textarea>
+		<br />
+		<label>Rilt Type</label>
+		<div class="form-group">
+			<div class="radio">
+				<label>
+				<input type="radio" name="rilt.type" value="0" ng-model="rilt.type">
+				Rilt
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+				<input type="radio" name="rilt.type" value="1" ng-model="rilt.type">
+				Mnemomic
+				</label>
+			</div>
+		</div>
+		<button ng-click="reset()">RESET</button>
+		<button ng-click="updateRilt(rilt)">Save</button>
+	</form>
+	<h2>Preview</h2>
+	<div markdownn="rilt.text">-rilt-M.D</div>
 </div>
+-->

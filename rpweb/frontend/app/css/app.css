@@ -1,4 +1,75 @@
 
-.kbblack{
+.body{
 background: #000;
 }
+
+
+
+.navbar-form .input-group {
+    display: table;
+}
+.navbar-form .input-group .input-group-addon,
+.navbar-form .input-group .input-group-btn {
+    white-space: nowrap;
+    width: 1%;
+}
+.navbar-form .input-group .form-control {
+    width: 100%;
+}
+
+
+
+.ng-hide-add-active, .ng-hide-remove {
+  display: inherit !important;
+}
+.ng-hide:not(.ng-animate) {
+  display: none !important;
+}
+
+
+.ng-hide-add-active, .ng-hide-remove {
+  display: inherit !important;
+}
+.ng-hide:not(.ng-animate) {
+  display: none !important;
+}
+
+
+
+.ngHideCustom
+{
+	
+	width:0px;
+	height:0px;
+    visibility:hidden;
+}
+
+.dropdown-menu>li>a{
+	line-height: 300%;
+}
+
+.buttonNavSquare{
+  
+  border-radius: 1px;
+  
+}
+
+
+.ta-editor {
+    min-height: 200px;
+    width: 80%;
+    height: 200px;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 100%;
+    max-height:200px;
+    
+    
+}
+ 
+.navButton2{
+	background-color:#454545;
+	color:#111;
+	border-color:#000;
+}
+

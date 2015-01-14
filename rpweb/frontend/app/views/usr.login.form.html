@@ -1,42 +1,70 @@
-<div style="width:50%">
-	<h4 >User Sign In
-	</h4>
+
+<div class="row">
+ <div class="center-block" style="width:400px;background-color:#ccc;">
+
+<div  class="panel panel-default center-text" >
+	<div class="panel-body ">
 	
-	<p>{{Usr.feedback}}</p>
+	
+	<h4 class='text-right'>Sign In  &nbsp;<span class="glyphicon glyphicon-user" aria-hidden="true"></span></h4>
+	
+	<hr />
+	
+	<p class="text-center text-danger "><em>&nbsp;{{Usr.feedback}}</em></p>
 	
 
   
-  <form novalidate class="simple-form" name="signinForm" role="form">
+  <form novalidate class="form-horizontal center-text" name="signinForm" role="form">
   
+  
+
+    
+    
+
+	   
 	  
    <div class="form-group"  ng-class="{ 'has-error': signinForm.Email.$invalid }">
-    <label for="email">Email address</label>
-    <input type="email" class="form-control" name="Email" placeholder="Enter email"  ng-model="usr.Email" required>
+    <label class="col-lg-3 control-label" for="email">Email </label>
+		<div class="col-lg-8">
+			<input type="email" class="form-control" name="Email" placeholder="Enter email"  ng-model="usr.Email" required>
+		</div>
+		
   </div>
   
   
      <div ng-show="signinForm.Email.$dirty && signinForm.Email.$invalid">Invalid:
-      <span ng-show="signinForm.Email.$error.required">Tell us yoxxxur email.</span>
-      <span ng-show="signinForm.Email.$error.email">This is not axx valid email.</span>
+      <span class="label label-danger" ng-show="signinForm.Email.$error.required">Tell us your email.</span>
+      <span class="label label-danger" ng-show="signinForm.Email.$error.email">This is not a valid email.</span>
     </div>
 
 
+<br />
+
 
 <div class="form-group">
-    <label for="password">Password</label>
-    <input type="password" class="form-control" name="password" placeholder="Password"  ng-model="usr.Password" required>
+    <label class="col-lg-3 control-label"  for="password">Password </label>
+    
+    <div class="col-lg-8">
+		<input type="password" class="form-control" name="password" placeholder="Password"  ng-model="usr.Password" required>
+	</div>
+	
   </div>
 
 
-    
-<button type="submit" class="btn  btn-lg btn-fill btn-primary" ng-click="signInUsr(usr)">Sign In</button>
-       
+<br />
+<button type="submit" class="center-block btn btn-primary btn-lg" ng-click="signInUsr(usr)">Sign In</button>
+
+  
        
 
-
- 
   </form>
   
 
+
+</div><!-- panel body -->
+ </div> <!-- panel -->
  
-</div>
+
+
+</div> <!-- center -->
+</div> <!-- row-->

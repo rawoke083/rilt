@@ -7,7 +7,9 @@ app.service('UsrAuth', function($http, $route, $routeParams, $location, $window,
 	var _Email="";
 	var _Id="";
 	var _Access_token="";
-	var _LoggedIn
+	var _LoggedIn = false;
+	
+	
 	
 	this.init = function(email, id, access_token) {
 		_Email = email;
