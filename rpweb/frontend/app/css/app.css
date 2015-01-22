@@ -57,8 +57,8 @@ background: #000;
 
 .ta-editor {
     min-height: 200px;
-    width: 80%;
-    height: 200px;
+    width: 100%;
+    
     overflow: auto;
     font-family: inherit;
     font-size: 100%;

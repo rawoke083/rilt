@@ -1,6 +1,58 @@
 /*******************************************
  *  Serives
  ******************************************/
+
+app.service('SearchService', function($http, $route, $routeParams, $location, $window, $q,$rootScope) {
+	
+	
+	var _term="";
+	var _results=[];
+	
+	
+	
+	
+	this.init = function() {
+		_term = "";		
+		_results=[];
+	};
+	
+	this.doSearch = function(term) {
+			
+			var deferred = $q.defer();
+				
+			$http.get('/api/v1/search/?term='+term).
+			success(function(data, status, headers, config) {
+					
+				_results = data;
+				_term 	= term;
+				
+				deferred.resolve(data);
+			}).
+			error(function(data, status, headers, config) {
+				_results = 0;	
+				deferred.reject(data);
+			});
+			
+			return deferred.promise;
+		} //end search
+		
+	this.doACSearch = function(term) {
+		
+	};
+	
+	
+	
+	this.getTerm= function() {
+		return _term;
+	};
+	
+	this.getResults= function() {
+		return _results;
+	};
+	
+	
+});
+
 app.service('UsrAuth', function($http, $route, $routeParams, $location, $window, $q,$rootScope) {
 	
 	

@@ -45,6 +45,21 @@ type Tag struct {
 	ok int
 }
 
+
+type SearchResult struct{
+	
+	Concept
+	
+	//rilt-summary
+	Text		string
+	//RiltCount	int64
+//	Tags TagSlice	
+}
+
+
+//Slices of XYZ
 type TagSlice []Tag
 type RiltSlice []Rilt
+type ConceptSlice []Concept
+type SearchResultSlice []SearchResult
 

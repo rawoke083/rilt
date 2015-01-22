@@ -52,6 +52,10 @@ app.config(function configure($routeProvider, $locationProvider,$httpProvider) {
         templateUrl: './views/index.notreg.html',
         controller: 'ConceptCtrl'
       }).
+    when('/search/:term', {
+		templateUrl: './views/search.view.html',
+		controller: 'SearchCtrl'
+	}).
 	otherwise({
 		redirect: '/koos'
 	});

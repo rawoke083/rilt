@@ -1,5 +1,93 @@
 
 
+
+/********************************************************************
+ * NavCtrl Controller 		NavCtrl Controller			NavCtrl Controller
+ ********************************************************************/
+app.controller('NavCtrl', function($rootScope, $scope, $http, $route, $routeParams, $location, $window, UsrAuth,SearchService) {
+	$scope.Nav = {
+		Email: UsrAuth.getEmail(),
+		IsLoggedIn : UsrAuth.isAuthenticated(),
+		Term : SearchService.getTerm()
+		
+	};
+
+	
+	$scope.InitNav = function (){
+		
+		$scope.Nav.Email =  UsrAuth.getEmail();
+		$scope.Nav.IsLoggedIn =  UsrAuth.isAuthenticated();
+			
+		
+	}
+	
+	
+	$scope.SignOut = function (){
+		UsrAuth.logout();		
+		
+		$location.path('/');	
+	
+	}
+	
+
+
+	$scope.SignIn = function (){
+		UsrAuth.logout();				
+		$location.path('/usr/signin');	
+		
+	
+	}
+	
+	$scope.doSearch = function(term){
+		//alert($rootScope.search.searchTerm);
+		$location.path('/search/'+$scope.Nav.Term);	
+		
+	}
+	
+	//$scope.InitNav();
+	 
+});
+
+/**********************************************************************
+ * SearchCtrl
+ *********************************************************************/
+ app.controller('SearchCtrl',function($rootScope,$scope, $http, $route, $routeParams, SearchService) {
+	
+	
+	$scope.sitems = [];
+	$scope.term = "";
+	
+	$scope.goSearch = function(term){
+		
+		if(!term){
+			
+			if ($routeParams.term) {
+				term =  $routeParams.term;
+			}
+			
+		}//end term-check
+		
+		
+		
+		SearchService.doSearch(term).then(function(response) {		
+				$scope.sitems = SearchService.getResults();
+				$scope.term = SearchService.getTerm();
+				
+			}, function(err) {
+				alert("No results");
+			});
+		
+		
+		
+		
+		
+	}//end term
+	
+	
+	$scope.goSearch();
+	
+ });
+ 
 /**********************************************************************
  * Concept
  *********************************************************************/
@@ -7,6 +95,8 @@
 	
 	$scope.concept= { feedback:""};
 	$rootScope.cid = 0;
+	
+	$scope.concepts = {trending:0};
 	
     $scope.getConcept 	= function(id){
 		//alert("ccc");
@@ -87,6 +177,28 @@
 		});
 	}; //updateRilt END 
 	
+	
+	$scope.getTrendPopular=function(){
+	
+		
+		
+		var url = "api/v1/concept/feed/trending";
+		
+		$http.get(url).
+		success(function(data, status, headers, config) {
+			
+			$scope.concepts.trending = data;	
+			
+			
+		}).
+		error(function(data, status, headers, config) {
+			// log error
+			$scope.concept.feedback = data;
+		});
+	
+	};//end - getTrendPopular
+	
+	
  });
  
 /***********************************************************************
@@ -94,14 +206,16 @@
  **********************************************************************/
 app.controller('RiltCtrl', function($rootScope,$scope, $http, $route, $routeParams,$sce, $location, UsrAuth) {
 	
-	// $scope.isAuth = UsrAuth.isAuthenticated;
-	$scope.init_sn = function() {
-		$('.summernote').summernote();
-	}
+	$rootScope.rc = {rilts:0};		
+	$scope.rc.addupdateText="";
+	$scope.rc.rilt = 0;
+	$scope.rc.offset = 0;
+	
+
 	$scope.getRiltLatest = function() {
 		$http.get('/api/v1/rilt/latest').
 		success(function(data, status, headers, config) {
-			$scope.rilts = data;
+			$scope.rc.rilts = data;
 		}).
 		error(function(data, status, headers, config) {
 			// log error
@@ -123,9 +237,9 @@ app.controller('RiltCtrl', function($rootScope,$scope, $http, $route, $routePara
 		$http.get('/api/v1/rilt/' + conceptId + "/" + offset).
 		success(function(data, status, headers, config) {
 			
-			$scope.rilts = data;
+			$rootScope.rc.rilts = data;
 			
-			$scope.trustAsHtml = $sce.trustAsHtml;
+			$rootScope.trustAsHtml = $sce.trustAsHtml;
 			
 		}).
 		error(function(data, status, headers, config) {
@@ -134,18 +248,25 @@ app.controller('RiltCtrl', function($rootScope,$scope, $http, $route, $routePara
 		});
 	}
 	$scope.updateRilt = function(rilt) {
-		rilt.type = parseInt(rilt.type);
-		rilt.concept_id = parseInt($rootScope.cid);
-		rilt.id = parseInt(rilt.id);
+		rilt.type 		= rilt.type;
+		rilt.concept_id = $rootScope.cid;
+		rilt.id 		= rilt.id;
 		
-		// Simple POST request example (passing data) :
+		
+		$scope.rc.rilt = rilt;
+		
 		$http.post('/api/v1/rilt/', rilt).
 		success(function(data, status, headers, config) {
 			// this callback will be called asynchronously
 			// when the response is available
-			$scope.feedback = data;
-			rilt.id = data.ID;
-			$location.path('/c/'+$rootScope.cid);
+			alert(status);
+			$scope.rc.feedback 	= data.feedback;
+			$scope.rc.rilt.id 	= data.ID;
+			
+			$scope.rc.addupdateText="Update Rilt";
+			
+			//reload
+			$scope.getRiltsForConcept($scope.rilt.concept_id,0)										
 			
 		}).
 		error(function(data, status, headers, config) {
@@ -161,6 +282,14 @@ app.controller('RiltCtrl', function($rootScope,$scope, $http, $route, $routePara
 	
 	$scope.InitRilt = function() {
 		
+		if($scope.rilt) {
+			$scope.rc.addupdateText="Update RiLT";	
+		}
+		else
+		{
+			$scope.rc.addupdateText="Add RiLT";
+		}
+		
 	};
 	
 	
@@ -168,46 +297,6 @@ app.controller('RiltCtrl', function($rootScope,$scope, $http, $route, $routePara
 	
 	
 	
-});
-
-
-/********************************************************************
- * NavCtrl Controller 		NavCtrl Controller			NavCtrl Controller
- ********************************************************************/
-app.controller('NavCtrl', function($rootScope, $scope, $http, $route, $routeParams, $location, $window, UsrAuth) {
-	$scope.Nav = {
-		Email: UsrAuth.getEmail(),
-		IsLoggedIn : UsrAuth.isAuthenticated()
-	};
-
-	$scope.InitNav = function (){
-		
-		$scope.Nav.Email =  UsrAuth.getEmail();
-		$scope.Nav.IsLoggedIn =  UsrAuth.isAuthenticated();
-			
-		
-	}
-	
-	
-	$scope.SignOut = function (){
-		UsrAuth.logout();		
-		
-		$location.path('/');	
-	
-	}
-	
-
-
-	$scope.SignIn = function (){
-		UsrAuth.logout();				
-		$location.path('/usr/signin');	
-		
-	
-	}
-	
-	
-	//$scope.InitNav();
-	 
 });
 
 

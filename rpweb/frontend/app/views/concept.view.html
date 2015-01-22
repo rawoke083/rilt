@@ -1,25 +1,227 @@
-<div ng-controller="ConceptCtrl" ng-init="getConcept(0)">
+<div class="row">
+	<!-- col 1 spacer -->
+	<div class="col-md-2">First col</div>
 	
-	<h4 >
-		Concept View HTML
-	</h4>
+	<div class="col-md-7"  ng-controller="ConceptCtrl" ng-init="getConcept(0)">
+		
+		<!--concetp panel -->
+		<div  class="panel panel-default center-text" style="width:100%;" ng-cloak>
+			<div class="panel-body ">
+				
+				<h2><i  class="fa fa-cubes"></i> {{concept.Title}} </h2>
+				<hr/>	
+				<p>
+				{{concept.Description}}
+				</p>
+			<br />	
+				
+				
+				<strong class="text-muted"><em>Tags</em></strong>
+				<button	class="btn btn-primary btn-xs">
+					&nbsp;Science&nbsp;
+				</button>
+				
+				<button	class="btn btn-success btn-xs">
+					&nbsp;<em>physics</em>&nbsp;
+				</button>
+	<hr/>
 	
-	<p ng-bind="concept.feedback"></p>
-	
-	<h2 ng-bind="concept.Title"></h2>
-	
-	<div>
-		<p ng-bind="concept.Description"></p>
-	</div>
-	
-	<h5  ng-bind="concept.Tags"  /></h5>
- 
-	
+			<!-- PF-->
+<button class="btn btn-default">
+						<strong>
+						<i class="fa fa-share-alt"></i>
+						&nbsp;
+						Share
+						</strong>
+					</button>
+					
+					<button class="btn btn-default">
+						<strong>
+						<i class="fa fa-newspaper-o"></i>
+						&nbsp;
+						Subscribe
+						</strong>
+					</button>
+		
+			</div> <!-- end panel-body -->
+			
+						<div class="panel-footer" ng-controller="RiltCtrl">
+			
+				
+				<div class="form-group">											
+						<text-angular ng-disabled="!cid" class="ta-toolbar-class="btn-toolbar"  ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default" ta-toolbar-button-active-class="active"
+						ta-toolbar="[['p','h5','h6','pre','quote','underline'],['bold','italics'],['insertImage']]"
+						rows="10"
+						placeholder="How do YOU rememeber this"                                                       "
+						ng-model="rilt.text"></text-angular>
+
+						
+					</div>
+					
+				
+				<div class="form-group form-inline">
+					<input type="text" ng-model="rilt.id" />
+					<input type="text" ng-model="cid" />
+					
+					<button class="btn btn-default btn-sm" ng-click="updateRilt(rilt)">
+					<img src="images/b4.png" height="20px"/>&nbsp;&nbsp;&nbsp;
+					<strong>{{rc.addupdateText}}</strong>&nbsp;&nbsp;&nbsp;</button>
+					
+					<button class="btn btn-default btn-sm" ng-click="updateConcept(concept)">
+					
+					
+					
+						<i class="fa fa-comment-o">						
+						&nbsp;&nbsp;
+						<strong>Add Comment</strong>
+						&nbsp;&nbsp;
+					
+					</i>
+					</button>
+				</div>
+				
+				
+				
+				
+				
+			</div> <!--end footer -->
+		</div> <!-- end panel -->
+		
+		
+		<!--concetp panel -->
+		<div  class="panel panel-default center-text" >
+			<div class="panel-body ">
+			
+			<div class="text-right text-mutedd">
+			Filter 	
+			<select>
+				
+				<Option>All</Option>
+				<Option>Rilts</Option>
+				<Option>Comments</Option>
+				
+			</select>
+			
+			&nbsp;
+			&nbsp;
+			&nbsp;
+			
+			Sort
+			<select>
+				
+				<Option>Popularity</Option>
+				<Option>Latest</Option>
+				<Option>Oldest</Option>
+				
+			</select>
+			</div>
+			
+			<hr />
+				
 	<div ng-controller="RiltCtrl" ng-init="getRiltsForConcept(cid,0)">
-		<ul>
-			<li ng-repeat="r in rilts">				
-				<p ng-bind-html="trustAsHtml(r.Text)"></p>
-			</li>
-		</ul>
-	</div>
-</div>
+		
+		<div class="row">
+		
+	
+			<div ng-repeat="r in rc.rilts" style="padding-left:10px;margin-left:10px;">				
+				<p>
+					<strong>Piet</strong>
+					<span class="text-muted">6 Jan 2014</span>
+				</p>
+				
+				<span ng-bind-html="trustAsHtml(r.Text)"></span>
+				
+				<p>
+					
+					<br/>
+
+					
+					<span class="text-muted"><em><strong>Vote</strong></em></span>
+					<button class="btn btn-primary btn-xs">
+						<strong>
+						<i class="fa fa-angle-up"></i> 
+						&nbsp;Up&nbsp;&nbsp;
+						</strong>
+					</button>
+					
+					<button  class="btn btn-primary btn-xs">
+						<strong>
+						<i class="fa fa-angle-down"></i> 
+						&nbsp;						
+						Down
+						</strong>
+					</button>
+					&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;
+					
+					<button  class="btn btn-primary btn-xs">
+						<strong>
+						<i class="fa fa-share-alt"></i> 
+						
+						
+						&nbsp;						
+						Share
+						</strong>
+					</button>
+					&nbsp;&nbsp;&nbsp;
+					
+				</p>
+				<hr/>
+			</div>
+			
+			
+		
+		</div><!-- ROW -->
+		
+	</div> <!--ng-controler-rilt -->
+
+
+
+
+
+			<!-- PF-->
+			<div class="panel-footer">
+				
+				<div class="form-group">
+					<button class="btn btn-danger btn-sm active" ng-click="updateConcept(concept)">
+					<i class="fa fa-save"></i>
+					&nbsp;&nbsp;&nbsp;<strong>Save</strong>&nbsp;&nbsp;&nbsp;</button>
+				</div>
+				
+			</div> <!--end footer -->
+		
+			</div> <!-- end panel-body -->
+		</div> <!-- end panel -->
+		
+		
+	</div> <!--END MID-COL -->
+	
+	
+	
+	<div class="col-md-3">
+	
+		
+		<div  class="panel panel-default center-text" style="">
+			<div class="panel-body ">
+					<h5 class="text-muted text-center">
+						POPULAR AND SIMILIAR
+					</h5>					
+					
+					<div ng-controller="ConceptCtrl" ng-init="getTrendPopular()">
+						<p ng-repeat="c in concepts.trending">
+							
+							<a href="/c/{{c.ID}}">{{c.Title}}</a>
+						</p>
+					
+					</div>
+					
+					
+					
+					
+			</div>
+		</div>	
+		
+	</div><!-- end-col-->
+</div> <!--ROW -->
+	
+		

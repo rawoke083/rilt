@@ -1,0 +1,53 @@
+<div class="row">
+	<!-- col 1 spacer -->
+	<div class="col-md-1">First col</div>
+	
+	<div class="col-md-9">
+		
+		
+	<div  class="panel panel-default center-text" >
+			<div class="panel-body ">
+				<p style='font-size:150%;'><span class="text-muted">Found {{sitems.length}} results for </span><strong>{{term}}</strong></p>
+				<hr />
+				
+				
+				<div ng-repeat="x	in sitems track by $index">
+				
+					<h4 style="line-height:100%;">
+						<a href="/c/{{x.ID}}" />{{ x.Title }}</a>
+						
+						
+					</h4>
+					<small class='text-muted'>Created on <span class="text-muted">{{x.Date_created}}</span> by {{x.Usr_Id}}</small> 
+					
+					<hr/>
+					
+					
+				</div> <!--sr -->
+				
+			</div> <!--pb -->
+	</div> <!--pnl -->
+		
+		
+		
+		
+		
+		
+		
+<ul>
+  <li ng-repeat="x	in sitems track by $index">
+    {{ x.Title }}
+  </li>
+</ul>
+
+	</div> <!--END MID-COL -->
+	
+	
+	
+	<div class="col-md-2">
+	
+RS		
+	</div><!-- end-col-->
+</div> <!--ROW -->
+	
+		

@@ -1321,7 +1321,7 @@ mark,.mark {
 }
 
 .text-muted {
-  color: #b3b3b3;
+  color: #888888;
 }
 
 .text-primary {
@@ -3127,9 +3127,13 @@ textarea.input-lg,textarea.form-group-lg .form-control,select[multiple].input-lg
 }
 
 .btn-default {
-  color: #333333;
+  color: #222;
   background-color: #ffffff;
-  border-color: #dddddd;
+  
+  
+  
+  border-color: #a0a0a0;
+  
 }
 
 .btn-default:hover,.btn-default:focus,.btn-default.focus,.btn-default:active,.btn-default.active,.open>.dropdown-toggle.btn-default {

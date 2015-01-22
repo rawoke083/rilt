@@ -11,3 +11,6 @@ var Rilt  RiltAPI
 
 type TagAPI struct{ }
 var Tag  TagAPI
+
+type SearchAPI struct{ }
+var Search  SearchAPI

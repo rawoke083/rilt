@@ -78,3 +78,17 @@ func (self *Concept) FindById(cid int64) bool {
 
 	return true
 }
+
+func (self *ConceptSlice) FindTrending([]string) bool {
+
+
+	err := storage.GetDb().Select(self, "SELECT id,title,date_created FROM Concept  order by date_created desc limit 5")
+
+	if err != nil {
+		log.Println(err.Error())
+		return false
+	}
+
+	return true
+}
+

@@ -52,6 +52,11 @@ func MW_AuthOK(w http.ResponseWriter, r *http.Request) bool{
 	
 }//end MW_Auth
 
+	
+func test(){
+	fmt.Println("koos")
+}
+
 
 
 func MW_API_Auth3(c *web.C, w http.ResponseWriter, r *http.Request) {
@@ -197,17 +202,22 @@ func main() {
 	//goji.Get("/api/v1/rilt/:id", Authenticated(APIRiltGet))
 	//goji.Get("/api/v1/rilt/:id/*", APIRiltGet)
 	
-	goji.Get("/api/v1/concept/:id/*", api.Auth.IsAuth(api.Concept.FindById))
-	goji.Get("/api/v1/concept/:id", api.Auth.IsAuth(api.Concept.FindById))
+	goji.Get("/api/v1/concept/feed/trending", api.Concept.FindTrending)
+	
+		
+
+
+	goji.Get("/api/v1/concept/:id/*", api.Concept.FindById)
+	goji.Get("/api/v1/concept/:id", api.Concept.FindById)
 	goji.Post("/api/v1/concept/",  api.Auth.IsAuth(api.Concept.NewUpdate))
 	
 	
-	goji.Post("/api/v1/concept/",  api.Auth.IsAuth(api.Concept.NewUpdate))
+	
 
 
 
 
-	goji.Post("/api/v1/rilt/",api.Rilt.NewUpdate)
+	goji.Post("/api/v1/rilt/",api.Auth.IsAuth(api.Rilt.NewUpdate))
 	goji.Get("/api/v1/rilt/:conceptid",api.Rilt.FindByConceptId)
 	
 	goji.Get("/api/v1/rilt/:conceptid/:offset",api.Rilt.FindByConceptIdList)
@@ -221,6 +231,9 @@ func main() {
 	
 	goji.Post("/api/v1/tag",api.Tag.New)
 	goji.Get("/api/v1/tag/:tagname",api.Tag.FindByName)
+	
+	
+	goji.Get("/api/v1/search/",api.Search.Search)
 	
 	
 	

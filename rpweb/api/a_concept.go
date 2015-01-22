@@ -11,6 +11,7 @@ import (
 	"github.com/zenazn/goji/web"
 
 	"github.com/rawoke083/rilt/rpweb/models"
+	"strings"
 )
 
 func (ConceptAPI) NewUpdate(c web.C, w http.ResponseWriter, req *http.Request) {
@@ -112,6 +113,43 @@ func (ConceptAPI) FindById(cc web.C, w http.ResponseWriter, req *http.Request) {
 	
 	
 	http.Error(w, "Concept not found", 404)
+	
+	return
+
+}
+
+
+
+
+func (ConceptAPI) FindTrending(cc web.C, w http.ResponseWriter, req *http.Request) {
+
+	log.Println("api.Concept.FindTrending====")
+
+	//log.Printf("\n\n%#v\n", cc)
+	
+	
+
+	tags := cc.URLParams["tags"]
+	
+	tagSlice := strings.Split(tags, ",")
+	
+
+
+	conceptTrending := new(models.ConceptSlice)
+	if conceptTrending.FindTrending(tagSlice) {
+
+		bjson, err := json.Marshal(conceptTrending)
+		if err != nil {
+			fmt.Println("error:", err)
+		}
+
+		log.Printf("\n\n%#v\n", conceptTrending)
+		fmt.Fprintf(w, string(bjson))
+		return;
+	} //end get model
+	
+	
+	http.Error(w, "ConceptTrends not found", 404)
 	
 	return
 
